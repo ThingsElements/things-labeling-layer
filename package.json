@@ -1,11 +1,8 @@
 {
   "name": "things-labeling-layer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "for things-label",
   "main": "index.js",
-  "scripts": {
-    "test": "test"
-  },
   "scripts": {
     "compile": "",
     "serve": "watchify src/*.js -o things-labeling-layer.js src/index.js & polyserve",
@@ -30,6 +27,5 @@
     "uglifyjs": "^2.4.10",
     "watchify": "^3.3.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
