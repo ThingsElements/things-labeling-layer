@@ -4,7 +4,6 @@
   "description": "for things-label",
   "main": "index.js",
   "scripts": {
-    "compile": "",
     "serve": "watchify src/*.js -o things-labeling-layer.js src/index.js & polyserve",
     "build": "browserify src/index.js -o things-labeling-layer.js && uglifyjs things-labeling-layer.js -m -c -o things-labeling-layer-min.js"
   },

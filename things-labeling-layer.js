@@ -34,8 +34,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var RESIZE_HANDLE_HALF_SIZE = 4;
 var RESIZE_HANDLE_FULL_SIZE = 8;
 
-var LabelResizer = function (_scene$ResizerModeler) {
-  _inherits(LabelResizer, _scene$ResizerModeler);
+var LabelResizer = function (_scene$Resizer) {
+  _inherits(LabelResizer, _scene$Resizer);
 
   function LabelResizer() {
     _classCallCheck(this, LabelResizer);
@@ -119,7 +119,7 @@ var LabelResizer = function (_scene$ResizerModeler) {
   }]);
 
   return LabelResizer;
-}(scene.ResizerModeler);
+}(scene.Resizer);
 
 exports.default = LabelResizer;
 
@@ -160,8 +160,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var ROTATION_STEP = Math.PI / 2;
 
-var LabelRotator = function (_scene$RotatorModeler) {
-  _inherits(LabelRotator, _scene$RotatorModeler);
+var LabelRotator = function (_scene$Rotator) {
+  _inherits(LabelRotator, _scene$Rotator);
 
   function LabelRotator() {
     _classCallCheck(this, LabelRotator);
@@ -202,7 +202,7 @@ var LabelRotator = function (_scene$RotatorModeler) {
   }]);
 
   return LabelRotator;
-}(scene.RotatorModeler);
+}(scene.Rotator);
 
 exports.default = LabelRotator;
 
@@ -300,345 +300,5 @@ exports.default = LabelingLayer;
 
 
 scene.Component.register('labeling-layer', LabelingLayer);
-
-// var Component = scene.Component;
-// var Group = scene.Group;
-// var Layer = scene.Layer;
-
-// var Modeler = scene.Modeler;
-// var CommandChange = scene.CommandChange;
-// var Const = scene.Const;
-
-// export default class LabelingLayer extends scene.Layer {
-
-//   constructor(model, context) {
-//     super(model, context)
-
-//     this.modelers = [
-//       new Modeler.ControlHandler(this),
-//       new Modeler.PathHandler(this),
-//       new Modeler.Resizer(this),
-//       new Modeler.Rotator(this),
-//     ]
-
-//     this.focusOutline = new Modeler.FocusOutline(this),
-//     this.groupOutline = new Modeler.GroupOutline(this),
-
-//     // 그릴 때는 contains 순서의 역순으로 그린다.
-//     this.reversedModelers = this.modelers.slice().reverse()
-//   }
-
-//   // Lifecycle
-//   added(parent) {
-
-//     var rootModel = this.rootModel
-
-//     var translate = rootModel.get('translate')
-//     var scale = rootModel.get('scale')
-
-//     this.set('translate', translate)
-//     this.set('scale', scale)
-//   }
-
-//   contains(x, y) {
-
-//     this.modelers.forEach(modeler => modeler.reset())
-
-//     var components = this.selected.filter(c => {
-//       /*
-//        * 부모가 있는 컴포넌트만을 그린다.
-//        * (selected에는 남아있을 수 있으나, undo에 의해서 이미 제거된 것일 수 있다.)
-//        */
-//       return !!c.parent
-//     })
-//     var scale = this.get('scale') || {x:1, y:1}
-
-//     for (let i = 0; i < components.length; i++) {
-
-//       let component = components[i];
-
-//       let point = component.transcoordT2S(x, y)
-
-//       for(let j = 0;j < this.modelers.length;j++) {
-//         let modeler = this.modelers[j]
-
-//         if(modeler.contains(point.x, point.y, component, scale)) {
-//           this.currentModeler = modeler
-//           return true
-//         }
-//       }
-
-//     }
-
-//     return false;
-//   }
-
-//   _componentDrawer(context, component, scale, logic) {
-//     let ancester = []
-//     let parent = component.parent
-
-//     if(component.isRootModel()) {
-//       context.save()
-//       logic(context, component, scale)
-//       context.restore()
-
-//       return
-//     }
-
-//     while(parent && !parent.isRootModel()) {
-//       ancester.push(parent)
-//       parent = parent.parent
-//     }
-
-//     context.save()
-
-//     ancester.reverse().forEach(function(parent) {
-//       // 원점으로 이동하여 회전.
-//       let rotatePoint = parent.rotatePoint;
-//       context.translate(rotatePoint.x, rotatePoint.y);
-//       let parent_scale = parent.get('scale')
-//       if(parent_scale)
-//         context.scale(parent_scale.x, parent_scale.y)
-
-//       context.rotate(parent.get('rotation'));
-//       context.translate(-rotatePoint.x, -rotatePoint.y);
-
-//       let bounds = parent.bounds
-//       context.translate(bounds.left, bounds.top)
-//     })
-
-//     let rotatePoint = component.rotatePoint;
-//     context.translate(rotatePoint.x, rotatePoint.y);
-
-//     let component_scale = component.get('scale')
-//     if(component_scale)
-//       context.scale(component_scale.x, component_scale.y)
-
-//     context.rotate(component.get('rotation'));
-//     context.translate(-rotatePoint.x, -rotatePoint.y);
-
-//     logic(context, component, scale)
-
-//     context.restore();
-//   }
-
-//   _pre_draw(context) {
-
-//     var { translate, scale = {x: 1, y: 1}, rotation } = this.model;
-
-//     context.save()
-//     context.beginPath()
-
-//     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-//     context.rect(0, 0, context.canvas.width, context.canvas.height);
-
-//     context.fillStyle = 'black'
-//     context.globalAlpha = 0.5
-//     context.fill()
-
-//     context.restore()
-
-//     if(translate)
-//       context.translate(translate.x * Const.DPPX, translate.y * Const.DPPX);
-
-//     context.scale(scale.x * Const.DPPX, scale.y * Const.DPPX);
-
-//     if(rotation)
-//       context.rotate(rotation);
-
-//     context.clearRect(0, 0, this.rootModel.get('width'), this.rootModel.get('height'))
-//   }
-
-//   _draw(context) {
-
-//     context.beginPath()
-
-//     var scale = this.get('scale') || {x:1, y:1}
-
-//     var selected = this.selected.filter(c => {
-//       /*
-//        * 부모가 있는 컴포넌트만을 그린다.
-//        * (selected에는 남아있을 수 있으나, undo에 의해서 이미 제거된 것일 수 있다.)
-//        */
-//       return !!c.parent
-//     })
-
-//     if(this.focused) {
-//       this._componentDrawer(context, this.focused, scale,
-//         (context, component, scale) => {
-//           this.focusOutline.draw(context, component, scale)
-//         }
-//       )
-//     }
-
-//     /* TODO selected의 부모가 group인 경우에 최상위 그룹의 모델링 레이아웃을 그려주어야 한다. */
-//     if(selected.length > 0 && selected[0].parent.isGroup()) {
-//       let rootGroup = selected[0].parent
-//       while(rootGroup.parent.isGroup())
-//         rootGroup = rootGroup.parent
-
-//       this._componentDrawer(context, rootGroup, scale,
-//         (context, component, scale) => {
-//           this.groupOutline.draw(context, component, scale)
-//         }
-//       )
-//     }
-
-//     selected.forEach(component => {
-
-//       this._componentDrawer(context, component, scale,
-//         (context, component, scale) => {
-//           this.reversedModelers.forEach(modeler => modeler.draw(context, component, scale))
-//         }
-//       )
-//     });
-//   }
-
-//   get eventMap() {
-//     return {
-//       'model-layer': {
-//         '(all)': {
-//           change: this.onchange_model,
-//           wheel: this.onwheel_scale
-//         }
-//       },
-//       '(root)': {
-//         '(self)': {
-//           selected: this.onselected
-//         }
-//       }
-//     }
-//   }
-
-//   onselected(after, before) {
-//     this.invalidate()
-//   }
-
-//   onchange_model(after, before, hint) {
-
-//     var { origin, deliverer } = hint
-
-//     if(origin === deliverer) {
-
-//       if(after.translate)
-//         // Model Base 레이어와 동일한 translate를 유지하도록 한다.
-//         this.set('translate', after.translate)
-
-//       if(after.rotation !== undefined)
-//         // Model Base 레이어와 동일한 rotation을 유지하도록 한다.
-//         this.set('rotation', after.rotation)
-
-//       if(after.scale)
-//         // Model Base 레이어와 동일한 scale을 유지하도록 한다.
-//         this.set('scale', after.scale)
-
-//     }
-//     // Model Base 레이어에서 발생하는 대부분의 변화는 Selection 레이어에서도 반영해야한다.
-//     this.invalidate()
-//   }
-
-//   /* default UI Event Handlers. */
-
-//   onmousedown(e) {
-
-//     this.currentModeler.onmousedown(e)
-
-//     this.invalidate();
-//   }
-
-//   onmouseup(e) {
-
-//     if(typeof(this.currentModeler.onmouseup) === 'function')
-//       this.currentModeler.onmouseup(e)
-
-//     this.invalidate();
-//   }
-
-//   onmouseenter(e, hint) {
-
-//     this.invalidate();
-//   }
-
-//   onmouseleave(e, hint) {
-
-//     this.invalidate();
-//   }
-
-//   ondragstart(e) {
-
-//     this.currentModeler.ondragstart(e)
-//   }
-
-//   ondragmove(e) {
-
-//     this.currentModeler.ondragmove(e)
-
-//     this.invalidate()
-//   }
-
-//   ondragend(e) {
-
-//     this.currentModeler.ondragend(e)
-
-//     this.invalidate();
-//   }
-
-//   onwheel_scale(e, hint) {
-//     /* shiftKey + wheel 은 deltaX 값을 변화시킨다. */
-//     if(e.deltaY == 0 && e.deltaX == 0)
-//       return
-
-//     var model_layer = hint.deliverer
-
-//     if(e.shiftKey) {
-//       var dir = (e.deltaX < 0) ? 1 : -1
-
-//       CommandChange.around(model_layer.selected, this.app.commander, () => {
-//         /* 선택된 컴포넌트의 텍스트 사이즈를 조절한다. */
-//         model_layer.selected.forEach(component => {
-//           let fontSize = component.get('fontSize') || Const.DEFAULT.TEXT_SIZE
-
-//           if(fontSize < 1)
-//             fontSize = 1
-
-//           fontSize += dir
-//           component.set('fontSize', fontSize)
-//         })
-//       })
-
-//     } else {
-//       var dir = (e.deltaY < 0) ? 1 : -1
-
-//       let scale = model_layer.get('scale') || {x:1, y:1}
-//       let translate = model_layer.get('translate')
-//       let x = e.offsetX
-//       let y = e.offsetY
-
-//       let p = model_layer.transcoordC2S(x, y)
-//       let delta = dir * 0.2
-
-//       let newscale = {
-//         x: scale.x + delta,
-//         y: scale.y + delta
-//       }
-
-//       if((dir < 0 && scale.x < 0.5) || (dir > 0 && scale.x > 10))
-//         return
-
-//       /* 휠을 밀면.. 확대 : zoom in */
-//       /* 휠을 당기면.. 축소 : zoom out */
-
-//       model_layer.set('scale', newscale)
-
-//       let newp = model_layer.transcoordC2S(x, y)
-
-//       model_layer.set('translate', {
-//         x: translate.x + (newp.x - p.x) * newscale.x,
-//         y: translate.y + (newp.y - p.y) * newscale.y
-//       })
-//     }
-
-//   }
-// }
 
 },{"./label-resizer":2,"./label-rotator":3}]},{},[1]);

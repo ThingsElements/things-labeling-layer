@@ -1,7 +1,7 @@
 const RESIZE_HANDLE_HALF_SIZE = 4
 const RESIZE_HANDLE_FULL_SIZE = 8
 
-export default class LabelResizer extends scene.ResizerModeler {
+export default class LabelResizer extends scene.Resizer {
 	contains(x, y, component, scale) {
 
     if(!component.resizable)
