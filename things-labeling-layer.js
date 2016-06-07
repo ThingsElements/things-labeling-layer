@@ -34,8 +34,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var RESIZE_HANDLE_HALF_SIZE = 4;
 var RESIZE_HANDLE_FULL_SIZE = 8;
 
-var LabelResizer = function (_scene$Resizer) {
-  _inherits(LabelResizer, _scene$Resizer);
+var LabelResizer = function (_scene$ResizerModeler) {
+  _inherits(LabelResizer, _scene$ResizerModeler);
 
   function LabelResizer() {
     _classCallCheck(this, LabelResizer);
@@ -119,7 +119,7 @@ var LabelResizer = function (_scene$Resizer) {
   }]);
 
   return LabelResizer;
-}(scene.Resizer);
+}(scene.ResizerModeler);
 
 exports.default = LabelResizer;
 
@@ -160,8 +160,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var ROTATION_STEP = Math.PI / 2;
 
-var LabelRotator = function (_scene$Rotator) {
-  _inherits(LabelRotator, _scene$Rotator);
+var LabelRotator = function (_scene$RotatorModeler) {
+  _inherits(LabelRotator, _scene$RotatorModeler);
 
   function LabelRotator() {
     _classCallCheck(this, LabelRotator);
@@ -202,7 +202,7 @@ var LabelRotator = function (_scene$Rotator) {
   }]);
 
   return LabelRotator;
-}(scene.Rotator);
+}(scene.RotatorModeler);
 
 exports.default = LabelRotator;
 
@@ -301,4 +301,4 @@ exports.default = LabelingLayer;
 
 scene.Component.register('labeling-layer', LabelingLayer);
 
-},{"./label-resizer":2,"./label-rotator":3}]},{},[1]);
+},{"./label-resizer":2,"./label-rotator":3}]},{},[1,2,3,4]);

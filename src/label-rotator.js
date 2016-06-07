@@ -1,6 +1,6 @@
 const ROTATION_STEP = Math.PI/2;
 
-export default class LabelRotator extends scene.Rotator {
+export default class LabelRotator extends scene.RotatorModeler {
 	ondragmove(e) {
 
     /* 로테이트 핸들의 이동을 처리한다. */
