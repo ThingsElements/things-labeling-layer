@@ -1,6 +1,6 @@
 {
   "name": "things-labeling-layer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "for things-label",
   "main": "index.js",
   "scripts": {
