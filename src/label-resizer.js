@@ -13,6 +13,11 @@ export default class LabelResizer extends scene.ResizerModeler {
       if(Math.abs(x - handle.x) <= (RESIZE_HANDLE_HALF_SIZE / scale.x) && Math.abs(y - handle.y) <= (RESIZE_HANDLE_HALF_SIZE / scale.y)) {
         // 현재 선택된 리사이즈 핸들의 정보
         
+
+        if (component.model.type === 'barcode') {
+          index = index === 0 ? 1 : 5
+        }
+
         this.active = { component, index }
       }
 
@@ -62,6 +67,10 @@ export default class LabelResizer extends scene.ResizerModeler {
       ctx.stroke()
       ctx.fillStyle = '#fff'
 
+      if (component.model.type === 'barcode') {
+        index = index === 0 ? 1 : 5
+      }
+
       if(active && active.component === component && active.index === index) {
         ctx.strokeStyle = '#fa7703'
 
@@ -83,14 +92,21 @@ function getResizeHandles(bounds, type) {
   var right = left + width
   var bottom = top + height
 
-	return [
-    { x: left, y: top },
-    { x: centerx, y: top },
-    { x: right, y: top },
-    { x: right, y: centery },
-    { x: right, y: bottom },
-    { x: centerx, y: bottom },
-    { x: left, y: bottom },
-    { x: left, y: centery }
-  ]
+	if (type === 'barcode') {
+    return [
+      { x: centerx, y: top },
+      { x: centerx, y: bottom }
+    ]
+  } else {
+    return [
+      { x: left, y: top },
+      { x: centerx, y: top },
+      { x: right, y: top },
+      { x: right, y: centery },
+      { x: right, y: bottom },
+      { x: centerx, y: bottom },
+      { x: left, y: bottom },
+      { x: left, y: centery }
+    ]
+  }
 }
