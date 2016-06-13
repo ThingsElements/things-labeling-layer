@@ -29,4 +29,12 @@ export default class LabelRotator extends scene.RotatorModeler {
       c.set('rotation', (rotation + deltaTheta) % (Math.PI * 2))
     })
   }
+
+  draw(context, component, scale) {
+    if(['text', 'rect', 'barcode', 'ellipse'].indexOf(component.model.type) < 0) {
+      return;
+    }
+
+    super.draw(context, component, scale);
+  }
 }

@@ -153,6 +153,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -199,6 +201,15 @@ var LabelRotator = function (_scene$RotatorModeler) {
         var rotation = c.get('rotation');
         c.set('rotation', (rotation + deltaTheta) % (Math.PI * 2));
       });
+    }
+  }, {
+    key: 'draw',
+    value: function draw(context, component, scale) {
+      if (['text', 'rect', 'barcode', 'ellipse'].indexOf(component.model.type) < 0) {
+        return;
+      }
+
+      _get(Object.getPrototypeOf(LabelRotator.prototype), 'draw', this).call(this, context, component, scale);
     }
   }]);
 
@@ -302,4 +313,4 @@ exports.default = LabelingLayer;
 
 scene.Component.register('labeling-layer', LabelingLayer);
 
-},{"./label-resizer":2,"./label-rotator":3}]},{},[1,2,3,4]);
+},{"./label-resizer":2,"./label-rotator":3}]},{},[1]);
