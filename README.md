@@ -1,3 +1,6 @@
+# 이 프로젝트는 더 이상 사용되지 않는 프로젝트임.
+# 삭제 예정일 : 2016년 8월 30일.
+
 # things-labeling-layer
 
 layer for label project
